@@ -10,7 +10,7 @@ import com.example.dicodingevents.data.response.ListEventsItem
 import com.example.dicodingevents.databinding.UpcomingItemBinding
 
 class UpcomingAdapter(private val onItemClick: (ListEventsItem) -> Unit): ListAdapter<ListEventsItem, UpcomingAdapter.ViewHolder>(DIFF_CALLBACK) {
-    class ViewHolder(val binding: UpcomingItemBinding) : RecyclerView.ViewHolder(binding.root) {
+    class ViewHolder(private val binding: UpcomingItemBinding) : RecyclerView.ViewHolder(binding.root) {
         fun bind(event: ListEventsItem, onItemClick: (ListEventsItem) -> Unit) {
             binding.tvName.text = event.name
             binding.quotaValue.text = event.quota.toString()

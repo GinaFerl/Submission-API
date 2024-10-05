@@ -10,7 +10,7 @@ import com.example.dicodingevents.data.response.ListEventsItem
 import com.example.dicodingevents.databinding.FinishedItemBinding
 
 class FinishedAdapter(private val onItemClick: (ListEventsItem) -> Unit) : ListAdapter<ListEventsItem, FinishedAdapter.ViewHolder>(DIFF_CALLBACK) {
-    class ViewHolder(val binding: FinishedItemBinding) : RecyclerView.ViewHolder(binding.root) {
+    class ViewHolder(private val binding: FinishedItemBinding) : RecyclerView.ViewHolder(binding.root) {
         fun bind(event: ListEventsItem, onItemClick: (ListEventsItem) -> Unit) {
             binding.tvName.text = event.name
             binding.quotaValue.text = event.quota.toString()
@@ -25,12 +25,12 @@ class FinishedAdapter(private val onItemClick: (ListEventsItem) -> Unit) : ListA
         }
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FinishedAdapter.ViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val binding = FinishedItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return ViewHolder(binding)
     }
 
-    override fun onBindViewHolder(holder: FinishedAdapter.ViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val event = getItem(position)
         holder.bind(event, onItemClick)
     }

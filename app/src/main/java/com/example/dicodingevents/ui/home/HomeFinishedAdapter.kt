@@ -1,15 +1,24 @@
 package com.example.dicodingevents.ui.home
 
+import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.example.dicodingevents.data.response.ListEventsItem
+import com.example.dicodingevents.databinding.HomeFinishedItemBinding
 
-class HomeAdapter(private val onItemClick: (ListEventsItem) -> Unit) : ListAdapter<ListEventsItem, HomeAdapter.ViewHolder>(DIFF_CALLBACK) {
-    class ViewHolder(private val binding: HomeItemBinding) : RecyclerView.ViewHolder(binding.root) {
+class HomeFinishedAdapter(private val onItemClick: (ListEventsItem) -> Unit) : ListAdapter<ListEventsItem, HomeFinishedAdapter.ViewHolder>(DIFF_CALLBACK) {
+    class ViewHolder(private val binding: HomeFinishedItemBinding) : RecyclerView.ViewHolder(binding.root) {
         fun bind(event: ListEventsItem, onItemClick: (ListEventsItem) -> Unit) {
-
+            binding.tvName.text = event.name
+            Glide.with(binding.root.context)
+                .load(event.mediaCover)
+                .into(binding.ivCarousel)
+            binding.root.setOnClickListener {
+                onItemClick(event)
+            }
         }
     }
 
@@ -25,10 +34,12 @@ class HomeAdapter(private val onItemClick: (ListEventsItem) -> Unit) : ListAdapt
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        TODO("Not yet implemented")
+        val binding = HomeFinishedItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        return ViewHolder(binding)
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        TODO("Not yet implemented")
+        val event = getItem(position)
+        holder.bind(event, onItemClick)
     }
 }

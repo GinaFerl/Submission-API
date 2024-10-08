@@ -28,7 +28,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="bottom"
             android:padding="8dp"
-            android:text="@string/title_upcoming"
+            android:text="@string/title_finished"
             android:textColor="@color/black"
             android:background="@color/white"
             android:textSize="15sp" />

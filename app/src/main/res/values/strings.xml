@@ -16,4 +16,6 @@
     <string name="detail">Detail Event</string>
     <string name="search">Search\n</string>
     <string name="no_internet_access">NO INTERNET ACCESS</string>
+    <string name="upcoming_event">Upcoming Event</string>
+    <string name="finished_event">Finished Event</string>
 </resources>

@@ -13,8 +13,11 @@ import retrofit2.Response
 
 class HomeViewModel : ViewModel() {
 
-    private val _events = MutableLiveData<List<ListEventsItem>>()
-    val events: LiveData<List<ListEventsItem>> get() = _events
+    private val _upcomingEvents = MutableLiveData<List<ListEventsItem>>()
+    val upcomingEvents: LiveData<List<ListEventsItem>> get() = _upcomingEvents
+
+    private val _finishedEvents = MutableLiveData<List<ListEventsItem>>()
+    val finishedEvents: LiveData<List<ListEventsItem>> get() = _finishedEvents
 
     private val _isLoading = MutableLiveData<Boolean>()
     val isLoading: LiveData<Boolean> get() = _isLoading
@@ -23,7 +26,7 @@ class HomeViewModel : ViewModel() {
         private const val TAG = "HomeViewModel"
     }
 
-    fun getUpcomingEvents5() {
+    fun getHomeUpcomingEvents() {
         _isLoading.value = true
         val client = ApiConfig.getApiService().getUpcoming5()
         client.enqueue(object : Callback<ListEventResponse> {
@@ -34,10 +37,10 @@ class HomeViewModel : ViewModel() {
                 _isLoading.value = false
                 if (response.isSuccessful) {
                     Log.d(
-                        "UpcomingFragment",
+                        "Home-UpcomingFragment",
                         "Number of events: ${response.body()?.listEvents?.size}"
                     )
-                    _events.value = response.body()?.listEvents?.take(5)
+                    _upcomingEvents.value = response.body()?.listEvents?.take(5)
                 } else {
                     Log.e(TAG, "onFailure: ${response.message()}")
                 }
@@ -46,6 +49,33 @@ class HomeViewModel : ViewModel() {
             override fun onFailure(call: Call<ListEventResponse>, t: Throwable) {
                 _isLoading.value = false
                 Log.e(TAG, "onFailure: ${t.message.toString()}")
+            }
+        })
+    }
+
+    fun getHomeFinishedEvents() {
+        _isLoading.value = true
+        val client = ApiConfig.getApiService().getFinished5()
+        client.enqueue(object : Callback<ListEventResponse> {
+            override fun onResponse(
+                call: Call<ListEventResponse>,
+                response: Response<ListEventResponse>
+            ) {
+                _isLoading.value = false
+                if (response.isSuccessful) {
+                    Log.d(
+                        "Home-FinishedFragment",
+                        "Number of events: ${response.body()?.listEvents?.size}"
+                    )
+                    _finishedEvents.value = response.body()?.listEvents?.take(5)
+                } else {
+                    Log.e(TAG, "onFailure: ${response.message()}")
+                }
+            }
+
+            override fun onFailure(p0: Call<ListEventResponse>, p1: Throwable) {
+                _isLoading.value = false
+                Log.e(TAG, "onFailure: ${p1.message.toString()}")
             }
         })
     }

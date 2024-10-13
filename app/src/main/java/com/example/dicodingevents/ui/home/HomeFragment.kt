@@ -13,6 +13,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.dicodingevents.databinding.FragmentHomeBinding
 import com.example.dicodingevents.ui.detail.DetailActivity
+import com.example.dicodingevents.ui.search.SearchActivity
 
 class HomeFragment : Fragment() {
 
@@ -80,6 +81,11 @@ class HomeFragment : Fragment() {
         } else {
             showLoading(false)
             binding.noInternet.visibility = View.VISIBLE
+        }
+
+        binding.btn1.setOnClickListener {
+            val intent = Intent(requireContext(), SearchActivity::class.java)
+            startActivity(intent)
         }
 
     }

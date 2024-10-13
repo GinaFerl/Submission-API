@@ -6,7 +6,9 @@ import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
 import android.os.Bundle
 import android.view.View
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.widget.doOnTextChanged
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.dicodingevents.data.retrofit.ApiConfig
@@ -43,14 +45,16 @@ class SearchActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
-        binding.rvSearch.adapter = adapter
-        binding.rvSearch.layoutManager = LinearLayoutManager(this)
-
         binding.rvEvents.adapter = eventsAdapter
         binding.rvEvents.layoutManager = LinearLayoutManager(this)
 
+        binding.rvSearch.apply {
+            layoutManager = LinearLayoutManager(this@SearchActivity)
+            adapter = this@SearchActivity.adapter
+        }
+
         searchViewModel.events.observe(this) { events ->
-            adapter.submitList(events)
+            adapter.setData(events)
         }
 
         searchViewModel.isLoading.observe(this) {isLoading ->
@@ -74,18 +78,25 @@ class SearchActivity : AppCompatActivity() {
 
         with(binding) {
             searchView.setupWithSearchBar(searchBar)
-            searchView
-                .editText
-                .setOnEditorActionListener { _, actionId, _ ->
-                    val query = searchView.text.toString()
-                    if (query.isNotEmpty()) {
-                        searchBar.setText(query)
-                        searchViewModel.getSearch(query)
-                        searchView.hide()
-                    }
-                    true
+
+            searchView.editText.setOnEditorActionListener { _, _, _ ->
+                val query = searchView.text.toString()
+                if (query.isNotEmpty()) {
+                    searchBar.setText(query)
+                    searchView.hide()
+                    searchViewModel.getSearch(query)
                 }
+                true
+            }
+
+            searchView.editText.doOnTextChanged { text, _, _, _ ->
+                val query = text.toString()
+                if (query.isNotEmpty()) {
+                    adapter.filter(query)
+                }
+            }
         }
+
     }
 
     private fun showLoading(isLoading: Boolean?) {

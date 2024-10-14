@@ -122,6 +122,32 @@
                     android:textColor="@color/gray_300"
                     android:fontFamily="@font/open_sans_medium"/>
             </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp">
+
+                <ImageView
+                    android:id="@+id/iv_remaining_quota"
+                    android:layout_width="20dp"
+                    android:layout_height="15dp"
+                    android:contentDescription="@string/remaining_quota"
+                    android:src="@drawable/baseline_app_registration_24"/>
+
+                <TextView
+                    android:id="@+id/remaining_quota_value"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_toEndOf="@id/iv_remaining_quota"
+                    android:fontFamily="@font/open_sans_medium"
+                    android:paddingStart="5dp"
+                    android:paddingEnd="2dp"
+                    android:text="@string/registrant_value"
+                    android:textColor="@color/gray_300"
+                    android:textSize="12sp" />
+
+            </RelativeLayout>
         </LinearLayout>
 
         <ProgressBar

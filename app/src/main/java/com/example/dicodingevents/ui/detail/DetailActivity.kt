@@ -79,6 +79,7 @@ class DetailActivity : AppCompatActivity() {
         binding.quotaValue.text = event.quota.toString()
         binding.registrantValue.text = event.registrants.toString()
         binding.locationValue.text = event.cityName
+        binding.remainingQuotaValue.text = (event.quota - event.registrants).toString()
         binding.timeValue.text = "$formattedDate $formattedTimeStart - $formattedTimeEnd"
         binding.desc.text = HtmlCompat.fromHtml(event.description, HtmlCompat.FROM_HTML_MODE_LEGACY)
         Glide.with(binding.ivCover.context)

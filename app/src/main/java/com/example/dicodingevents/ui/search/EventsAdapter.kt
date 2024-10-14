@@ -13,6 +13,7 @@ class EventsAdapter(private val onItemClick: (ListEventsItem) -> Unit) : ListAda
     class ViewHolder(private val binding: AllItemBinding) : RecyclerView.ViewHolder(binding.root) {
         fun bind(event: ListEventsItem, onItemClick: (ListEventsItem) -> Unit) {
             binding.tvName.text = event.name
+            binding.locationValue.text = event.cityName
             binding.quotaValue.text = event.quota.toString()
             binding.registrantValue.text = event.registrants.toString()
             Glide.with(binding.ivFinished.context)
